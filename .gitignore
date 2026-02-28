@@ -1,0 +1,19 @@
+# Variables d'environnement — NE JAMAIS COMMIT
+.env
+
+# Données brutes — trop lourdes pour GitHub
+data/legifrance/
+data/judilibre/
+data/processed/
+
+# Cache Python
+__pycache__/
+*.pyc
+*.pyo
+
+# Modèles fine-tunés — sur HF Hub à la place
+output/
+
+# Logs
+*.log
+wandb/

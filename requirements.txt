@@ -1,0 +1,11 @@
+trl>=0.8.0
+transformers>=4.40.0
+datasets>=2.18.0
+peft>=0.10.0
+bitsandbytes>=0.43.0
+accelerate>=0.28.0
+gradio>=4.0.0
+huggingface_hub>=0.22.0
+wandb
+python-dotenv>=1.0.0
+requests>=2.31.0
