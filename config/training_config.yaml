@@ -1,0 +1,51 @@
+# Configuration pour lancer l'entraînement sur HF Jobs
+# Usage : trl-jobs sft --config config/training_config.yaml
+
+model_name_or_path: mistralai/Ministral-8B-instruct
+dataset_name: Youcefffj/lexia-french-legal
+
+# Sortie — org officielle hackathon OBLIGATOIRE
+output_dir: ./output/lexia-ministral-8b
+hub_model_id: mistral-hackaton-2026/lexia-ministral-8b
+push_to_hub: true
+
+# Durée
+num_train_epochs: 3
+per_device_train_batch_size: 4
+gradient_accumulation_steps: 2
+learning_rate: 2.0e-4
+lr_scheduler_type: cosine
+warmup_ratio: 0.05
+
+# Mémoire
+bf16: true
+gradient_checkpointing: true
+optim: paged_adamw_32bit
+
+# LoRA
+use_peft: true
+lora_r: 16
+lora_alpha: 32
+lora_dropout: 0.05
+lora_target_modules:
+  - q_proj
+  - k_proj
+  - v_proj
+  - o_proj
+  - gate_proj
+  - up_proj
+  - down_proj
+
+# Dataset
+dataset_text_field: messages
+max_seq_length: 2048
+
+# Logging
+logging_steps: 25
+eval_strategy: steps
+eval_steps: 100
+save_steps: 200
+load_best_model_at_end: true
+
+# W&B tracking
+report_to: wandb
