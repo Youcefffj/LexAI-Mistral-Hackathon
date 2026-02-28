@@ -62,7 +62,9 @@ def appeler_mistral_api(messages):
             "temperature": 0.3,
             "max_tokens": 1024,
         },
+        timeout=30,
     )
+    reponse.raise_for_status()
     return reponse.json()["choices"][0]["message"]["content"]
 
 
@@ -169,7 +171,6 @@ def construire_interface():
     """
     with gr.Blocks(
         title="⚖️ LexIA — Assistant Juridique Français",
-        theme=gr.themes.Soft(primary_hue="indigo"),
     ) as interface:
 
         # En-tête
@@ -208,7 +209,6 @@ def construire_interface():
                         cas_output = gr.Textbox(
                             label="Analyse juridique LexIA",
                             lines=15,
-                            show_copy_button=True,
                         )
 
                 gr.Examples(
@@ -228,7 +228,7 @@ def construire_interface():
                     lines=3,
                 )
                 btn_question = gr.Button("💬 Répondre", variant="primary")
-                question_output = gr.Textbox(label="Réponse LexIA", lines=12, show_copy_button=True)
+                question_output = gr.Textbox(label="Réponse LexIA", lines=12)
 
                 gr.Examples(
                     examples=EXEMPLES_QUESTIONS,
@@ -247,7 +247,7 @@ def construire_interface():
                     lines=10,
                 )
                 btn_resume = gr.Button("📝 Résumer", variant="primary")
-                resume_output = gr.Textbox(label="Résumé LexIA", lines=10, show_copy_button=True)
+                resume_output = gr.Textbox(label="Résumé LexIA", lines=10)
 
                 btn_resume.click(resumer_jugement, inputs=[jugement_input], outputs=resume_output)
 

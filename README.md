@@ -13,7 +13,7 @@ des cas juridiques complexes en citant les articles exacts du droit français.
 - **Démo live :** https://huggingface.co/spaces/Youcefffj/lexia
 - **Modèle :** https://huggingface.co/mistral-hackaton-2026/lexia-ministral-8b
 - **Dataset :** https://huggingface.co/datasets/Youcefffj/lexia-french-legal
-- **W&B Run :** https://wandb.ai/youcefffj/youcefffj-mistralhack
+- **W&B Run :** https://wandb.ai/youcefffj-mistralhack/youcefffj-mistralhack
 
 ## 📊 Sources de données
 
@@ -21,6 +21,17 @@ des cas juridiques complexes en citant les articles exacts du droit français.
 |--------|------|--------|
 | Légifrance (erdal/legifrance) | Articles de loi officiels | ~1500 articles |
 | Exemples synthétiques | Cas types rédigés | ~10 exemples |
+
+## 📈 Résultats du fine-tuning
+
+| Métrique | Valeur |
+|----------|--------|
+| Modèle de base | Ministral 8B Instruct |
+| Epochs | 3 |
+| Train loss final | 0.5066 |
+| Eval loss final | 0.4449 |
+| Temps d'entraînement | ~2h20 |
+| GPU | A10G (HF Jobs) |
 
 ## 🛠️ Stack
 
