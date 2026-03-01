@@ -9,3 +9,4 @@ huggingface_hub>=0.22.0
 wandb
 python-dotenv>=1.0.0
 requests>=2.31.0
+mistralai>=1.0.0
