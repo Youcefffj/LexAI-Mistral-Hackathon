@@ -41,18 +41,55 @@ OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 # Domaines juridiques à récupérer — choisis pour couvrir les cas courants
 # que LexIA devra analyser (licenciement, divorce, loyer, accident, etc.)
 SEARCH_QUERIES = [
+    # Droit du travail
     "licenciement abusif",
-    "responsabilité civile",
+    "licenciement économique",
     "contrat de travail rupture",
+    "harcèlement moral travail",
+    "discrimination embauche",
+    "heures supplémentaires",
+    "rupture conventionnelle",
+    "période essai",
+    "congé maternité",
+    "accident travail",
+    "faute grave licenciement",
+    "clause non concurrence",
+    # Droit civil / famille
+    "responsabilité civile",
     "divorce séparation biens",
     "garde enfant autorité parentale",
-    "harcèlement moral travail",
+    "pension alimentaire",
+    "succession héritage",
+    "prestation compensatoire",
+    "adoption",
+    "obligation alimentaire",
+    # Droit du logement
     "vice caché achat immobilier",
     "loyer impayé expulsion",
-    "accident circulation indemnisation",
+    "bail habitation",
+    "dépôt garantie caution",
+    "trouble voisinage",
+    "copropriété charges",
+    "expulsion locataire",
+    # Droit pénal
     "abus de confiance escroquerie",
-    "discrimination embauche",
+    "vol agression",
+    "diffamation injure",
+    "harcèlement pénal",
+    "violence conjugale",
+    "conduite état alcoolique",
+    # Droit de la consommation
+    "garantie conformité",
+    "rétractation achat distance",
+    "pratique commerciale trompeuse",
+    "clause abusive contrat",
+    # Droit des assurances
+    "indemnisation accident",
+    "assurance habitation sinistre",
     "rupture promesse vente",
+    # Droit administratif
+    "permis construire",
+    "fonction publique",
 ]
 
 # ─── AUTHENTIFICATION ─────────────────────────────────────────────────────────
@@ -211,7 +248,7 @@ def recuperer_tous_les_articles():
         print(f"\n🔍 Recherche : '{query}'")
 
         # Récupérer les métadonnées des articles
-        articles_meta = rechercher_articles(token, query, taille_page=30)
+        articles_meta = rechercher_articles(token, query, taille_page=50)
         print(f"   → {len(articles_meta)} articles trouvés")
 
         for meta in articles_meta:

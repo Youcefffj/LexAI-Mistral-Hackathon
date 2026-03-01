@@ -168,7 +168,7 @@ CSS = """
 
 EXEMPLES_CLIQUABLES = [
     (
-        "Licenciement",
+        "Licenciement abusif",
         "Mon employeur m'a licencie verbalement sans lettre ni motif apres "
         "5 ans d'anciennete. Je n'ai recu aucun document. Que puis-je faire ?",
     ),
@@ -186,6 +186,26 @@ EXEMPLES_CLIQUABLES = [
         "Pension alimentaire",
         "Mon ex-conjoint ne paie plus la pension alimentaire fixee par le "
         "juge depuis 4 mois. Quels sont mes recours ?",
+    ),
+    (
+        "Arnaque en ligne",
+        "J'ai achete un telephone sur un site internet, paye 450 EUR par "
+        "carte bancaire, mais je n'ai jamais recu le colis. Le vendeur ne repond plus.",
+    ),
+    (
+        "Garde d'enfants",
+        "Je suis en cours de divorce et mon ex-conjoint veut demenager a "
+        "600 km avec nos deux enfants sans mon accord. Quels sont mes droits ?",
+    ),
+    (
+        "Harcelement au travail",
+        "Mon superieur hierarchique m'humilie quotidiennement en public, "
+        "me donne des taches degradantes et m'a menace de licenciement si j'en parle.",
+    ),
+    (
+        "Vice cache immobilier",
+        "J'ai achete une maison il y a 6 mois et je decouvre des "
+        "infiltrations massives dans la toiture que le vendeur n'a pas declarees.",
     ),
 ]
 
@@ -376,13 +396,33 @@ def construire_interface():
 
         # ── Header ────────────────────────────────────────────────────────
         gr.HTML("""
-        <div style="text-align:center; padding:20px 20px 10px">
-            <h1 style="margin-bottom:4px">LexIA</h1>
-            <p style="margin-top:0">Assistant juridique specialise en droit francais</p>
-            <span style="background:#4f46e5;color:white;padding:3px 12px;
-                         border-radius:12px;font-size:12px">
-                Mistral Hack-a-ton 2026 -- Fine-tuned on Legifrance + Judilibre
-            </span>
+        <div style="text-align:center; padding:30px 20px 16px">
+            <div style="display:inline-block; background:linear-gradient(135deg, #ff6b00, #ff8c00);
+                        -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+                        font-size:3.2em; font-weight:800; letter-spacing:-1px; margin-bottom:2px">
+                LexIA
+            </div>
+            <p style="margin:4px 0 12px; color:#bbb; font-size:1.05em">
+                Assistant juridique IA specialise en droit francais
+            </p>
+            <div style="display:flex; justify-content:center; gap:8px; flex-wrap:wrap">
+                <span style="background:#1a1a2e; border:1px solid #ff6b00; color:#ff8c00;
+                             padding:4px 14px; border-radius:20px; font-size:12px">
+                    Mistral Hack-a-ton 2026
+                </span>
+                <span style="background:#1a1a2e; border:1px solid #444; color:#aaa;
+                             padding:4px 14px; border-radius:20px; font-size:12px">
+                    Fine-tune Ministral 8B
+                </span>
+                <span style="background:#1a1a2e; border:1px solid #444; color:#aaa;
+                             padding:4px 14px; border-radius:20px; font-size:12px">
+                    162K exemples juridiques
+                </span>
+                <span style="background:#1a1a2e; border:1px solid #444; color:#aaa;
+                             padding:4px 14px; border-radius:20px; font-size:12px">
+                    Legifrance + Judilibre + BSARD
+                </span>
+            </div>
         </div>
         """)
 
@@ -432,6 +472,32 @@ def construire_interface():
                             )
                             btn_ex4 = gr.Button(
                                 EXEMPLES_CLIQUABLES[3][0],
+                                size="sm",
+                                variant="secondary",
+                                elem_classes=["exemple-btn"],
+                            )
+                        with gr.Row():
+                            btn_ex5 = gr.Button(
+                                EXEMPLES_CLIQUABLES[4][0],
+                                size="sm",
+                                variant="secondary",
+                                elem_classes=["exemple-btn"],
+                            )
+                            btn_ex6 = gr.Button(
+                                EXEMPLES_CLIQUABLES[5][0],
+                                size="sm",
+                                variant="secondary",
+                                elem_classes=["exemple-btn"],
+                            )
+                        with gr.Row():
+                            btn_ex7 = gr.Button(
+                                EXEMPLES_CLIQUABLES[6][0],
+                                size="sm",
+                                variant="secondary",
+                                elem_classes=["exemple-btn"],
+                            )
+                            btn_ex8 = gr.Button(
+                                EXEMPLES_CLIQUABLES[7][0],
                                 size="sm",
                                 variant="secondary",
                                 elem_classes=["exemple-btn"],
@@ -498,6 +564,22 @@ def construire_interface():
                 )
                 btn_ex4.click(
                     fn=lambda: EXEMPLES_CLIQUABLES[3][1],
+                    outputs=cas_input,
+                )
+                btn_ex5.click(
+                    fn=lambda: EXEMPLES_CLIQUABLES[4][1],
+                    outputs=cas_input,
+                )
+                btn_ex6.click(
+                    fn=lambda: EXEMPLES_CLIQUABLES[5][1],
+                    outputs=cas_input,
+                )
+                btn_ex7.click(
+                    fn=lambda: EXEMPLES_CLIQUABLES[6][1],
+                    outputs=cas_input,
+                )
+                btn_ex8.click(
+                    fn=lambda: EXEMPLES_CLIQUABLES[7][1],
                     outputs=cas_input,
                 )
 
@@ -581,27 +663,100 @@ def construire_interface():
                 gr.Markdown(f"""
 ## LexIA -- Assistant Juridique Francais
 
-LexIA est un modele **Ministral 8B fine-tune** sur les sources juridiques officielles francaises.
+LexIA est un modele **Ministral 8B fine-tune** sur les sources juridiques officielles francaises,
+construit dans le cadre du **Mistral Hack-a-ton 2026**.
 
-### Sources de donnees
-- **Legifrance** -- Code civil, penal, assurances (sources officielles)
-- **Judilibre** -- Decisions anonymisees de la Cour de Cassation
+### Donnees d'entrainement (v1) -- 3 030 exemples
+
+| Source | Volume | Description |
+|--------|--------|-------------|
+| **Legifrance** | ~1 500 | Articles de loi officiels (code civil, penal, travail, assurances) |
+| **Judilibre** | ~1 500 | Decisions de justice anonymisees de la Cour de Cassation |
+| **Exemples synthetiques** | ~30 | Cas-types rediges manuellement |
+
+### Resultats du fine-tuning (v1)
+
+| Metrique | Valeur |
+|----------|--------|
+| Modele de base | Ministral 8B Instruct |
+| Methode | LoRA r=16, 4-bit (QLoRA) |
+| Epochs | 3 |
+| Train loss | 0.5066 |
+| Eval loss | 0.4449 |
 
 ### Stack technique
-- **Modele de base :** Ministral 8B Instruct
-- **Fine-tuning :** TRL SFTTrainer + LoRA 4-bit
-- **Compute :** Hugging Face Jobs (A10G)
+- **Modele de base :** Ministral 8B Instruct (recommande par l'organisation)
+- **Fine-tuning :** TRL SFTTrainer + QLoRA 4-bit (r=16, alpha=32)
+- **Compute :** Hugging Face Jobs (A10G, 24 GB VRAM)
 - **Tracking :** Weights & Biases
+- **Interface :** Gradio (rendu Markdown, chat multi-tour)
+- **API :** SDK Mistral AI
 - **Modele :** `{HF_USERNAME}/{MODEL_NAME}`
+
+### Domaines juridiques couverts
+Droit du travail, Droit du logement, Droit de la famille,
+Droit penal, Droit de la consommation, Droit des assurances
+
+### V2 en cours de training
+Un dataset enrichi de **162 444 exemples** (Judilibre, LegalKit, Cold French Law, BSARD)
+est en cours de fine-tuning pour ameliorer les performances du modele.
 
 ### Disclaimer legal
 LexIA est un outil d'aide a la recherche juridique.
-Il ne remplace pas l'avis d'un avocat qualifie.
+Les informations fournies sont indicatives et ne remplacent en aucun cas les conseils d'un avocat qualifie.
+
+---
+
+## LexIA -- French Legal Assistant (English)
+
+LexIA is a **Ministral 8B fine-tuned** model on official French legal sources,
+built for the **Mistral Hack-a-ton 2026**.
+
+### Training data (v1) -- 3,030 examples
+
+| Source | Volume | Description |
+|--------|--------|-------------|
+| **Legifrance** | ~1,500 | Official legal articles (civil, criminal, labor, insurance codes) |
+| **Judilibre** | ~1,500 | Anonymized court decisions from the Cour de Cassation |
+| **Synthetic examples** | ~30 | Manually written case studies |
+
+### Fine-tuning results (v1)
+
+| Metric | Value |
+|--------|-------|
+| Base model | Ministral 8B Instruct |
+| Method | LoRA r=16, 4-bit (QLoRA) |
+| Epochs | 3 |
+| Train loss | 0.5066 |
+| Eval loss | 0.4449 |
+
+### Tech stack
+- **Base model:** Ministral 8B Instruct (recommended by the organization)
+- **Fine-tuning:** TRL SFTTrainer + QLoRA 4-bit (r=16, alpha=32)
+- **Compute:** Hugging Face Jobs (A10G, 24 GB VRAM)
+- **Tracking:** Weights & Biases
+- **Interface:** Gradio (Markdown rendering, multi-turn chat)
+- **API:** Mistral AI SDK
+- **Model:** `{HF_USERNAME}/{MODEL_NAME}`
+
+### Legal domains covered
+Labor law, Housing law, Family law,
+Criminal law, Consumer law, Insurance law
+
+### V2 currently training
+An enriched dataset of **162,444 examples** (Judilibre, LegalKit, Cold French Law, BSARD)
+is currently being fine-tuned to improve model performance.
+
+### Legal disclaimer
+LexIA is a legal research assistance tool.
+The information provided is for guidance only and does not replace the advice of a qualified lawyer.
                 """)
 
         gr.HTML(
-            "<p style='text-align:center;color:#888;margin-top:10px'>"
-            "Built for Mistral Hack-a-ton 2026 -- LexIA</p>"
+            "<p style='text-align:center;color:#555;margin-top:16px;font-size:0.85em'>"
+            "LexIA -- Mistral Hack-a-ton 2026 | "
+            "Fine-tune Ministral 8B sur 162K exemples juridiques | "
+            "Legifrance + Judilibre + LegalKit + BSARD</p>"
         )
 
     return interface

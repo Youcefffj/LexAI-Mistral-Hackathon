@@ -39,14 +39,49 @@ OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 # Sujets à rechercher par chambre de la Cour de Cassation
 # Chaque chambre spécialisée dans un domaine juridique
 SUJETS_RECHERCHE = [
-    {"q": "licenciement",      "chambre": "soc"},   # Chambre sociale → droit du travail
-    {"q": "responsabilité",    "chambre": "civ1"},  # 1ère civile → contrats, famille
-    {"q": "contrat vente",     "chambre": "civ3"},  # 3ème civile → immobilier
-    {"q": "divorce",           "chambre": "civ1"},  # 1ère civile → famille
-    {"q": "accident corporel", "chambre": "civ2"},  # 2ème civile → accidents
-    {"q": "escroquerie",       "chambre": "crim"},  # Chambre criminelle → pénal
-    {"q": "harcèlement",       "chambre": "soc"},   # Sociale → travail
-    {"q": "bail locatif",      "chambre": "civ3"},  # 3ème civile → locations
+    # Chambre sociale — droit du travail
+    {"q": "licenciement",               "chambre": "soc"},
+    {"q": "harcèlement",                "chambre": "soc"},
+    {"q": "rupture conventionnelle",    "chambre": "soc"},
+    {"q": "heures supplémentaires",     "chambre": "soc"},
+    {"q": "discrimination",             "chambre": "soc"},
+    {"q": "contrat travail",            "chambre": "soc"},
+    {"q": "salaire",                    "chambre": "soc"},
+    {"q": "accident travail",           "chambre": "soc"},
+    {"q": "faute grave",                "chambre": "soc"},
+    {"q": "congé",                      "chambre": "soc"},
+    # 1ère civile — contrats, famille
+    {"q": "responsabilité",             "chambre": "civ1"},
+    {"q": "divorce",                    "chambre": "civ1"},
+    {"q": "pension alimentaire",        "chambre": "civ1"},
+    {"q": "succession",                 "chambre": "civ1"},
+    {"q": "garde enfant",               "chambre": "civ1"},
+    {"q": "prestation compensatoire",   "chambre": "civ1"},
+    {"q": "contrat",                    "chambre": "civ1"},
+    {"q": "assurance",                  "chambre": "civ1"},
+    # 2ème civile — accidents, procédure
+    {"q": "accident corporel",          "chambre": "civ2"},
+    {"q": "indemnisation",              "chambre": "civ2"},
+    {"q": "préjudice",                  "chambre": "civ2"},
+    {"q": "sécurité sociale",           "chambre": "civ2"},
+    # 3ème civile — immobilier
+    {"q": "contrat vente",              "chambre": "civ3"},
+    {"q": "bail locatif",               "chambre": "civ3"},
+    {"q": "copropriété",                "chambre": "civ3"},
+    {"q": "construction",               "chambre": "civ3"},
+    {"q": "vice caché",                 "chambre": "civ3"},
+    {"q": "expulsion",                  "chambre": "civ3"},
+    # Chambre criminelle — pénal
+    {"q": "escroquerie",                "chambre": "crim"},
+    {"q": "vol",                        "chambre": "crim"},
+    {"q": "violence",                   "chambre": "crim"},
+    {"q": "stupéfiants",                "chambre": "crim"},
+    {"q": "diffamation",                "chambre": "crim"},
+    {"q": "abus confiance",             "chambre": "crim"},
+    # Chambre commerciale
+    {"q": "société",                    "chambre": "comm"},
+    {"q": "faillite",                   "chambre": "comm"},
+    {"q": "concurrence",               "chambre": "comm"},
 ]
 
 # ─── AUTHENTIFICATION ─────────────────────────────────────────────────────────
@@ -192,7 +227,7 @@ def recuperer_toutes_les_decisions():
         chambre = sujet.get("chambre")
         print(f"\n⚖️  Recherche : '{query}' (chambre : {chambre or 'toutes'})")
 
-        resultats = rechercher_decisions(token, query, chambre, nombre=25)
+        resultats = rechercher_decisions(token, query, chambre, nombre=50)
         print(f"   → {len(resultats)} décisions trouvées")
 
         for resultat in resultats:
